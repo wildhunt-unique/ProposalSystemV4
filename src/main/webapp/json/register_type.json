@@ -1,0 +1,11 @@
+[
+	{
+		"id":"suggest",
+		"text":"建议",
+		"selected":true
+	},
+	{
+		"id":"proposal",
+		"text":"立案"
+	}
+]

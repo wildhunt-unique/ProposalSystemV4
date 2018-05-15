@@ -1,0 +1,32 @@
+.tree-title {
+    padding-top:5px;
+}
+.tree-node {
+    height: 28px;
+}
+.tree-node-selected {
+    background: #497ed9;
+}
+.combobox-item-selected {
+    background-color: #497ed9;
+}
+.menu-active {
+    background-color: #497ed9;
+    border-color: #497ed9;
+    color: #fff;
+}
+
+table td{
+	cursor:pointer;
+}
+
+ul.tabs{
+	height:40px
+}
+.panel-body {
+    overflow: hidden;
+}
+
+.combo-panel {
+  overflow: auto;
+}

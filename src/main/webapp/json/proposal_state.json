@@ -1,0 +1,23 @@
+[{
+	"id":"all_proposal",
+	"text":"全部提案",
+	"selected":true
+},{
+	"id":"passed_proposal",
+	"text":"通过"
+},{
+	"id":"unPassed_proposal",
+	"text":"驳回"
+},{
+	"id":"checking_proposal",
+	"text":"待审核"
+},{
+	"id":"dealing_proposal",
+	"text":"部署中"
+},{
+	"id":"working_proposal",
+	"text":"实施中"
+},{
+	"id":"over_proposal",
+	"text":"实施完成"
+}]

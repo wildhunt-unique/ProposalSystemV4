@@ -1,0 +1,26 @@
+[{
+	"id":"home_panel",
+	"text":"首页"
+},{
+	"id":"view_proposal_panel",
+	"text":"查看提案"
+},{
+	"id":"create_proposal_panel",
+	"text":"提案管理",
+	"children":[{
+		"id":"create_proposal_panel",
+		"text":"提出提案"
+	},{
+		"id":"mine_proposal_panel",
+		"text":"我的提案"
+	},{
+		"id":"support_proposal_panel",
+		"text":"附议提案"
+	},{
+		"id":"result_primary_prop_panel",
+		"text":"承办提案"
+	},{
+		"id":"result_help_prop_panel",
+		"text":"协办提案"
+	}]
+}]

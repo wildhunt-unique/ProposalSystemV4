@@ -1,0 +1,237 @@
+a{
+	text-decoration:none;
+}
+body{
+    font-size: 13px;
+    font-family: 冬青黑体简体中文, Tahoma, "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, STHeiti, "WenQuanYi Micro Hei", SimSun, sans-serif;
+}
+#root_top_header{
+    height:56px;
+    background-color: #497ed9;
+    border: 0px;
+}
+#root_left_menu{
+    width: 200px;
+    border: 0px;
+    background-color: #f7f9fb;
+    border-right: 1px solid #e6e6e6;
+}
+#root_right_content{
+    background:#e6e6e6;
+    border: 0px;
+}
+#header_logo{
+    position: absolute;
+    width: 400px;
+    height: 50px;
+    overflow: hidden;
+    top: 3px;
+    left: 16px;
+    background: no-repeat center left;
+    background-size:50px 50px;	
+    background-image: url("../img/logo.png");
+}
+#header_logo_text{
+	position: absolute;
+	left: 56px;
+	height:36px;
+	width:315px;
+	top: 7px;
+	font-size:15px;
+	background-image: url("../img/loog_text.png");
+	background-size:100% 100%;
+}
+.header_right_bar{
+    position: absolute;
+    top: 16px;
+    left: 500px;
+    width: 400px;
+    height: 24px;
+}
+.hearder_right_item{
+    color: white;
+    padding: 0 6px;
+    vertical-align: top;
+    display: inline-block;
+    line-height: 24px;
+}
+#user_name{
+    font-weight: bold;
+}
+.hearder_right_btn{
+    cursor: pointer;
+    border-radius:5px 5px 5px 5px;
+}
+.hearder_right_btn:hover{
+    background-color: #E0ECFF;
+    color: #0E2D5F;
+}
+.root_bottom{
+    background-color:#e6e6e6;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+#left_menu_tree{
+    position: absolute;
+    left: 0px;
+    top: 40px;
+    border:0px;
+    font-size: 13px;
+    background-color: #f7f9fb;
+}
+#left_menu_tree li{
+    line-height: 28px;
+}
+.right_content_panel{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    position: absolute;
+    display: none;
+    top: 0px;
+    left: 0px;
+}
+#account_manage_panel{
+
+}
+.root_bottom_btn{
+    height: 26px;
+    margin: 3px;
+    width: 100px;
+    background-color: white;
+}
+#search_user{
+    border-radius:5px 5px 5px 5px;
+    width: 200px;
+}
+.right_content_panel_text {
+	position: absolute;
+    left: 0px;
+    top: 40px;
+    width: 100%;
+    height: calc(100% - 40px)  ;
+}
+.account_manage_deparment_tree{
+    position: absolute;
+    left: 0px;
+    width: 249px;
+    height: 100%;
+    border-right:1px solid lightgray ;
+}
+#account_manage_deparment_tree{
+    position: absolute;
+    left: 0px;
+    border: 1px;
+}
+.deparment_member_panel{
+    position: absolute;
+    left: 250px;
+    width: calc(100% - 250px);
+    height: 100%;
+    top: 0px;
+}
+#account_manage_btn_delete{
+}
+.new_account_table{
+    position: absolute;
+    top: 5%;
+    left:10%;
+    width: 80%;
+}
+.new_account_window_toolbar{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: lightgray;
+    height: 35px;
+}
+.view_proposal_btn{
+    height: 26px;
+    margin: 7px;
+    width: 100px;
+    background-color: white;
+}
+#view_proposal_btn{
+    width: 120px;
+}
+.view_proposal_label{
+    height: 26px;
+    margin: 7px;
+    width: 100px;
+}
+#create_proposal_edit{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    background-color: wheat;
+}
+.create_edit_panel{
+    position: absolute;
+    left: 0px;
+    top: 50px;
+    width: 100%;
+}
+.create_title_panel{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 50px;
+    width: 100%;
+}
+.create_title{
+    font-size: large;
+    position: absolute;
+    top: 7px;
+    left: 80px;
+    height: 26px;
+    border: 1px solid lightgrey;
+    width: 1000px;
+    border-radius: 5px 5px 5px 5px;
+}
+.create_title_label{
+    font-size: large;
+    position: absolute;
+    top: 7px;
+    left: 0px;
+}
+.deal_prop_item_panel{
+	position:relative;
+	width:96%;
+	height:375px;
+	margin:2%;
+}
+.deal_prop_item_content{
+	width:100%;
+	height:275px;
+}
+
+
+.deal_prop_item_btn{
+	width:96%;
+	height:40px;
+	margin:2%;
+}
+.deal_prop_item_panel .easyui-linkbutton{
+	position:absolute;
+	top:0px;
+	right:0px;
+}
+.result_context_panel{
+	position:absolute;
+	width:98%;
+	height:calc(100% - 100px);
+	top:60px;
+	left:0px;
+	overflow-y:scroll;
+	padding:15px;
+}
+
+
+
+

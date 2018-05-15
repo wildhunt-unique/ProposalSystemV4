@@ -1,0 +1,28 @@
+[{
+	"id":"home_panel",
+	"text":"首页"
+},{
+	"id":"view_proposal_panel",
+	"text":"查看提案"
+},{
+	"id":"account_manage_panel",
+	"text":"系统管理",
+	"children":[{
+		"id":"account_manage_panel",
+		"text":"账户管理"
+	},
+	{
+		"id":"create_news_panel",
+		"text":"添加通知新闻"
+	}]
+},{
+	"id":"deal_proposal_panel",
+	"text":"提案管理管理",
+	"children":[{
+		"id":"register_prop_panel",
+		"text":"分类提案"
+	},{
+		"id":"deal_proposal_panel",
+		"text":"部署提案"
+	}]
+}]

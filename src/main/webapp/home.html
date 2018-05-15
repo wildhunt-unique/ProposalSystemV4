@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>提案系统</title>
+<link rel="stylesheet" type="text/css"
+	href="easyUI/themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="easyUI/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="css/home.css">
+<link rel="stylesheet" href="css/customization.css" type="text/css">
+<script src="easyUI/jquery.min.js"></script>
+<script src="easyUI/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="easyUI/locale/easyui-lang-zh_CN.js"></script>
+<script src="ckeditor/ckeditor.js"></script>
+<style type="text/css">
+</style>
+</head>
+<body class="easyui-layout">
+
+	<table style="display:none" class="easyui-datagrid"
+		id="1view_proposal_table"
+		data-options="striped:true,
+                                       singleSelect:true,
+                                       collapsible:false,
+                                       method:'get',
+                                       loadMsg : '正在加载中，请稍等... ',
+                                       pagination:true">
+		<thead>
+
+		</thead>
+	</table>
+	<table style="display:none" class="easyui-datagrid"
+		id="2view_proposal_table"
+		data-options="striped:true,	
+                                       singleSelect:true,
+                                       collapsible:false,
+                                       method:'get',
+                                       loadMsg : '正在加载中，请稍等... ',
+                                       pagination:true">
+		<thead>
+
+		</thead>
+	</table>
+	<table style="display:none" class="easyui-datagrid"
+		id="3view_proposal_table"
+		data-options="striped:true,
+                                       singleSelect:true,
+                                       collapsible:false,
+                                       method:'get',
+                                       loadMsg : '正在加载中，请稍等... ',
+                                       pagination:true">
+		<thead>
+
+		</thead>
+	</table>
+
+	<!--顶部头部区-->
+	<div id="root_top_header"
+		data-options="region:'north',title:'',split:false ">
+		<!--logo存放div-->
+		<div id="header_logo" title="">
+			<div id="header_logo_text"></div>
+		</div>
+		<!--用户信息区-->
+		<div class="header_right_bar">
+			<!--用户名称-->
+			<div class="hearder_right_item" id="header_user">
+				<span id="user_name">姓名</span><span
+					id="user_id"> &lt;工号&gt; </span>
+			</div>
+			<!--退出功能按钮-->
+			<a id="header_right_logout" href="logout.do"
+				class="hearder_right_item hearder_right_btn">退出</a>
+			<div id="header_right_func_2" style="display:none"
+				class="hearder_right_item hearder_right_btn">预留</div>
+			<div id="header_right_func_3" style="display:none"
+				class="hearder_right_item hearder_right_btn">预留</div>
+		</div>
+	</div>
+
+	<!--左侧树状菜单-->
+	<div id="root_left_menu"
+		data-options="region:'west',title:'',split:false">
+		<div class="root_bottom"></div>
+		<div class="easyui-panel" style="padding:5px" id="left_menu_tree">
+			<ul id="left_menu_tree_content" class="easyui-tree"
+				data-options="url:'json/${LoginMember.memberClass}.json',method:'get',animate:true"></ul>
+		</div>
+	</div>
+
+	<!--右侧内容区-->
+	<div id="root_right_content" data-options="region:'center',title:''">
+		<!--首页面板部分-->
+		<div id="home_panel" class="right_content_panel">
+			<div class="root_bottom"></div>
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid home_panel" id="view_news_table"
+					data-options="striped:true,
+                                       singleSelect:true,
+                                       collapsible:false,
+                                       url:'getInfo.do?type=allNews',
+                                       method:'get',
+                                       loadMsg : '正在加载中，请稍等... ',
+                                       pagination:true">
+					<thead>
+						<tr>
+							<th
+								data-options="align:'center',resizable:false,field:'newsId',width:70">编号</th>
+							<th
+								data-options="align:'center',resizable:false,field:'newsDate',width:100">时间</th>
+							<th
+								data-options="halign:'left',resizable:false,field:'newsTitle',width:1160">标题</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!--查看提案面板-->
+		<div id="view_proposal_panel" class="right_content_panel">
+			<div class="root_bottom">
+				<label for="proposal_state_combobox" class="view_proposal_label">提案状态:</label>
+				<input class="view_proposal_btn" id="proposal_state_combobox"
+					name="" value=""> <label for="proposal_type_combobox"
+					class="view_proposal_label">类型:</label> <input
+					class="view_proposal_btn" id="proposal_type_combobox" name=""
+					value=""><label for="proposal_state_combobox"
+					class="view_proposal_label">起止日期:</label> <input
+					id="view_proposal_date_begin" type="text"
+					class="view_proposal_btn easyui-datebox"> <label
+					for="proposal_state_combobox" class="view_proposal_label">-</label>
+				<input id="view_proposal_date_end" type="text"
+					class="view_proposal_btn easyui-datebox"> <a
+					href="javascript:void(0)" id="view_proposal_search"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-search'">查询</a> <a
+					href="javascript:void(0)" id="view_proposal_reset"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-remove'">重置条件</a><a
+					href="javascript:void(0)" id="view_meeting_btn_open"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-remove'">查看会议</a>
+			</div>
+
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid view_proposal_panel"
+					id="view_proposal_table"
+					data-options="striped:true,
+                                       singleSelect:true,
+                                       collapsible:false,
+                                       url:'findProp.do?type=AllPropInfo',
+                                       method:'get',
+                                       loadMsg : '正在加载中，请稍等... ',
+                                       pagination:true">
+					<thead>
+						<tr>
+							<th
+								data-options="align:'center',resizable:false,field:'propNo',width:70">编号</th>
+							<th
+								data-options="halign:'center',resizable:false,field:'propTitle',width:450">标题</th>
+							<th
+								data-options="align:'center',resizable:false,field:'depuName',width:100">所属部门</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propType',width:50">类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDate',width:80">提交日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propLast',width:80">修改日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propState',width:80">提案状态</th>
+							<th
+								data-options="align:'center',resizable:false,field:'memberName',width:80">提出者</th>
+							<th data-options="resizable:false,field:'memberSup',width:500 ">附议人</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!--账号管理面板-->
+		<div id="account_manage_panel" class="right_content_panel">
+			<!--顶部按钮存放区-->
+			<div class="root_bottom">
+				<!--添加部门或者员工-->
+				<a href="javascript:void(0)" id="new_account_menu"
+					class="root_bottom_btn easyui-menubutton "
+					style="background-color: white"
+					data-options="menu:'#new_account',iconCls:'icon-add'">新建账户</a>
+				<div id="new_account" style="width:100px;">
+					<div onclick="$('#new_account_window').window('open')">增加成员</div>
+					<div class="account_manage_btn_depu_add">增加代表团</div>
+					<div class="account_manage_btn_dept_add">增加部门</div>
+				</div>
+
+				<!--导入或者导出人事信息-->
+				<a href="javascript:void(0)" id="import_export_menu"
+					class="easyui-menubutton root_bottom_btn"
+					style="background-color: white;display:none"
+					data-options="menu:'#import_export',iconCls:'icon-edit'">导入/导出</a>
+				<div id="import_export" style="width:100px;">
+					<div data-options="iconCls:'icon-redo'">导入</div>
+					<div>导出(按部门)</div>
+					<div>导出(全部)</div>
+				</div>
+				<a href="javascript:void(0)"
+					class="easyui-linkbutton root_bottom_btn account_manage_btn_mem_delete"
+					data-options="plain:false,iconCls:'icon-remove'">刪除</a><a
+					href="javascript:void(0)" id="account_manage_btn_edit"
+					class="easyui-linkbutton root_bottom_btn"
+					data-options="plain:false,iconCls:'icon-edit'">修改</a><a
+					href="javascript:void(0)" id="account_manage_btn_add_dept"
+					class="easyui-linkbutton root_bottom_btn"
+					data-options="plain:false,iconCls:'icon-edit'">设置分管部门</a> <input
+					placeholder="输入姓名，按回车键进行搜索" type="text" id="search_user"
+					class="root_bottom_btn" />
+			</div>
+
+			<!--账号管理正文区-->
+			<div class="right_content_panel_text">
+				<!--正文左侧部门树-->
+				<div class="account_manage_deparment_tree">
+					<div class="easyui-tabs" style="width:100%;height:700px">
+						<div title="部门" style="padding:10px">
+							<ul id="deparment_tree" class="easyui-tree"
+								data-options="url:'TreeNode.do?treeType=dept',method:'get',animate:true"></ul>
+						</div>
+						<div title="代表团" style="padding:10px">
+							<ul id="deputation_tree" class="easyui-tree"
+								data-options="url:'TreeNode.do?treeType=depu',method:'get',animate:true"></ul>
+						</div>
+					</div>
+				</div>
+				<!--正文右侧成员名单区-->
+				<div class="deparment_member_panel">
+					<table class="easyui-datagrid account_manage_panel"
+						id="account_manage_deparment_table"
+						style="width: 1036px;height: 703px;"
+						data-options=" checkOnSelect:true,
+                                       striped:true,
+                                       singleSelect:false,
+                                       collapsible:false,
+                                       url:'findMem.do?type=dept&id=AllDepartment',
+                                       method:'get',
+                                       pagination:true">
+						<thead>
+							<tr>
+								<th data-options="checkbox:true,field:''"></th>
+								<th
+									data-options="align:'center',resizable:false,field:'memberName',width:100">姓名</th>
+								<th
+									data-options="align:'center',resizable:false,field:'memberNo',width:200">工号</th>
+								<th
+									data-options="align:'center',resizable:false,field:'memberClass',width:100">职能</th>
+								<th
+									data-options="align:'center',resizable:false,field:'deptName',width:150">所属部门</th>
+								<th
+									data-options="align:'center',resizable:false,field:'depuName',width:150">所属代表团</th>
+								<th
+									data-options="align:'left',resizable:false,field:'numOfProp',width:500">议案提交数量</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<!--新闻列表面板-->
+		<div class="right_content_panel" id="news_list_panel">
+			<!--顶部菜单区-->
+			<div class="root_bottom"></div>
+			<!--下方正文区-->
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid news_list_panel" id="news_list_table"
+					data-options=" checkOnSelect:true,
+                                       striped:true,
+                                       singleSelect:false,
+                                       collapsible:false,
+                                       method:'get',
+                                       pagination:true,
+				                         pageSize:10">
+					<thead>
+						<tr>
+							<th
+								data-options="resizable:false,field:'propNo',align:'center',width:80">编号</th>
+							<th
+								data-options="resizable:false,field:'propTitle',halign:'center',width:450">标题</th>
+							<th
+								data-options="resizable:false,field:'depuName',align:'center',width:150">所属部门</th>
+							<th
+								data-options="resizable:false,field:'propType',align:'center',width:40">类型</th>
+							<th
+								data-options="resizable:false,field:'memberSup',align:'center',width:200 ">附议人</th>
+							<th
+								data-options="resizable:false,field:'propDate',align:'center',width:80">提交日期</th>
+							<th
+								data-options="resizable:false,field:'propLast',align:'center',width:80">最后修改日期</th>
+							<th
+								data-options="resizable:false,field:'propState',align:'center',width:100">提案状态</th>
+							<th
+								data-options="resizable:false,field:'memberName',align:'center',width:100">提出者</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!--添加新闻面板-->
+		<div class="right_content_panel" id="create_news_panel">
+			<div class="root_bottom">
+				<a href="javascript:void(0)" id="create_news_submit"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-ok'">提交</a>
+			</div>
+			<div class="right_content_panel_text">
+				<div class="create_title_panel">
+					<label class="create_title_label" for="create_news_title_text">新闻标题</label>
+					<input type="text" id="create_news_title_text" class="create_title">
+				</div>
+				<div class="create_edit_panel">
+					<div id="create_news_edit"></div>
+				</div>
+			</div>
+		</div>
+
+		<!--提出提案面板-->
+		<div id="create_proposal_panel" class="right_content_panel">
+			<div class="root_bottom">
+				<a href="javascript:void(0)" id="create_proposal_submit"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-ok'">提交提案</a> <a
+					href="javascript:void(0)" id="create_proposal_cancel"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-cancel'">取消</a><label
+					for="proposal_type_combobox" class="view_proposal_label view_proposal_type_select"
+					style="margin-top:20px">提交类型:</label><input
+					class="view_proposal_btn view_proposal_type_select" id="create_proposal_type_combobox"
+					name="" value=""><a style="display:none"
+					href="javascript:void(0)" id="create_proposal_save"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-save'">保存为草稿</a>
+			</div>
+			<div class="right_content_panel_text">
+				<div class="create_title_panel">
+					<label class="create_title_label" for="create_proposal_title_text">提案主题</label>
+					<input type="text" id="create_proposal_title_text"
+						class="create_title">
+				</div>
+				<div class="create_edit_panel">
+					<div id="create_proposal_edit"></div>
+				</div>
+			</div>
+		</div>
+
+		<!--我的提案面板-->
+		<div id="mine_proposal_panel" class="right_content_panel">
+			<div class="root_bottom"></div>
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid mine_proposal_panel"
+					id="mine_proposal_table"
+					data-options="fitColumns:false,checkOnSelect : true,striped : true,singleSelect : false,collapsible : false,url : 'findProp.do?type=MinePropInfo',method : 'get',pagination : true,loadMsg : '正在加载中，请稍等... ',emptyMsg : '<span>无记录</span>'">
+					<thead>
+						<tr>
+							<th
+								data-options="align:'center',resizable:false,field:'propNo',width:70">编号</th>
+							<th
+								data-options="halign:'center',resizable:false,field:'propTitle',width:450">标题</th>
+							<th
+								data-options="align:'center',resizable:false,field:'depuName',width:100">所属部门</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propType',width:50">类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDate',width:80">提交日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propLast',width:80">修改日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propState',width:80">提案状态</th>
+							<th
+								data-options="align:'center',resizable:false,field:'memberName',width:80">提出者</th>
+							<th data-options="resizable:false,field:'memberSup',width:500 ">附议人</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!--附议提案面板-->
+		<div id="support_proposal_panel" class="right_content_panel">
+			<div class="root_bottom"></div>
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid support_proposal_panel"
+					id="support_proposal_table"
+					data-options="fitColumns:false,checkOnSelect : true,striped : true,singleSelect : false,collapsible : false,url : 'findProp.do?type=SupportPropInfo',method : 'get',pagination : true,loadMsg : '正在加载中，请稍等... ',emptyMsg : '<span>无记录</span>'">
+					<thead>
+						<tr>
+							<th
+								data-options="align:'center',resizable:false,field:'propNo',width:70">编号</th>
+							<th
+								data-options="halign:'center',resizable:false,field:'propTitle',width:450">标题</th>
+							<th
+								data-options="align:'center',resizable:false,field:'depuName',width:100">所属部门</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propType',width:50">类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDate',width:80">提交日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propLast',width:80">修改日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propState',width:80">提案状态</th>
+							<th
+								data-options="align:'center',resizable:false,field:'memberName',width:80">提出者</th>
+							<th data-options="resizable:false,field:'memberSup',width:500 ">附议人</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!--审核提案面板-->
+		<div id="check_proposal_panel" class="right_content_panel">
+			<div class="root_bottom"></div>
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid check_proposal_panel"
+					id="check_proposal_table"
+					data-options="fitColumns:false,checkOnSelect : true,striped : true,singleSelect : false,collapsible : false,url : 'findProp.do?type=CheckPropInfo',method : 'get',pagination : true,loadMsg : '正在加载中，请稍等... ',emptyMsg : '<span>无记录</span>'">
+					<thead>
+						<tr>
+							<th
+								data-options="align:'center',resizable:false,field:'propNo',width:70">编号</th>
+							<th
+								data-options="halign:'center',resizable:false,field:'propTitle',width:450">标题</th>
+							<th
+								data-options="align:'center',resizable:false,field:'depuName',width:100">所属部门</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propType',width:50">类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDate',width:80">提交日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propLast',width:80">修改日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propState',width:80">提案状态</th>
+							<th
+								data-options="align:'center',resizable:false,field:'memberName',width:80">提出者</th>
+							<th data-options="resizable:false,field:'memberSup',width:500 ">附议人</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!--部署提案面板-->
+		<div id="deal_proposal_panel" class="right_content_panel">
+			<div class="root_bottom"></div>
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid deal_proposal_panel"
+					id="deal_proposal_table"
+					data-options="striped:true,
+                                       singleSelect:true,
+                                       collapsible:false,
+                                       url:'findProp.do?type=DealPropInfo',
+                                       method:'get',
+                                       loadMsg : '正在加载中，请稍等... ',
+                                       pagination:true">
+					<thead>
+						<tr>
+							<th
+								data-options="align:'center',resizable:false,field:'propNo',width:70">编号</th>
+							<th
+								data-options="halign:'center',resizable:false,field:'propTitle',width:350">标题</th>
+							<th
+								data-options="align:'center',resizable:false,field:'depuName',width:100">所属部门</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propType',width:50">类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDealType',width:100">处理类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDate',width:80">提交日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propLast',width:80">修改日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propState',width:80">提案状态</th>
+							<th
+								data-options="align:'center',resizable:false,field:'memberName',width:80">提出者</th>
+							<th data-options="resizable:false,field:'memberSup',width:500 ">附议人</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!--处理承办结果提案面板-->
+		<div id="result_primary_prop_panel" class="right_content_panel">
+			<div class="root_bottom"></div>
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid result_primary_prop_panel"
+					id="result_primary_proposal_table"
+					data-options="fitColumns:false,checkOnSelect : true,striped : true,singleSelect :true,collapsible : false,url : 'findProp.do?type=resultPrimaryPropInfo',method : 'get',pagination : true,loadMsg : '正在加载中，请稍等... ',emptyMsg : '<span>无记录</span>'">
+					<thead>
+						<tr>
+							<th
+								data-options="align:'center',resizable:false,field:'propNo',width:70">编号</th>
+							<th
+								data-options="halign:'center',resizable:false,field:'propTitle',width:350">标题</th>
+							<th
+								data-options="align:'center',resizable:false,field:'depuName',width:100">所属部门</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propType',width:50">类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDealType',width:100">处理类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDate',width:80">提交日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'implDate',width:80">处理日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propState',width:80">提案状态</th>
+							<th
+								data-options="align:'center',resizable:false,field:'memberName',width:80">提出者</th>
+							<th
+								data-options="resizable:false,field:'heleDeptName',width:500 ">协办部门</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!--查看协办提案面板-->
+		<div id="result_help_prop_panel" class="right_content_panel">
+			<div class="root_bottom"></div>
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid result_help_prop_panel"
+					id="result_help_proposal_table"
+					data-options="fitColumns:false,checkOnSelect : true,striped : true,singleSelect :true,collapsible : false,url : 'findProp.do?type=resultHelpPropInfo',method : 'get',pagination : true,loadMsg : '正在加载中，请稍等... ',emptyMsg : '<span>无记录</span>'">
+					<thead>
+						<tr>
+							<th
+								data-options="align:'center',resizable:false,field:'propNo',width:70">编号</th>
+							<th
+								data-options="halign:'center',resizable:false,field:'propTitle',width:350">标题</th>
+							<th
+								data-options="align:'center',resizable:false,field:'depuName',width:100">所属部门</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propType',width:50">类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDealType',width:100">处理类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDate',width:80">提交日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'implDate',width:80">处理日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propState',width:80">提案状态</th>
+							<th
+								data-options="align:'center',resizable:false,field:'memberName',width:80">提出者</th>
+							<th data-options="resizable:false,field:'memberSup',width:500 ">附议人</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!--分類提案面板-->
+		<div id="register_prop_panel" class="right_content_panel">
+			<div class="root_bottom"></div>
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid register_prop_panel"
+					id="register_proposal_table"
+					data-options="fitColumns:false,checkOnSelect : true,striped : true,singleSelect :true,collapsible : false,url : 'findProp.do?type=registerPropInfo',method : 'get',pagination : true,loadMsg : '正在加载中，请稍等... ',emptyMsg : '<span>无记录</span>'">
+					<thead>
+						<tr>
+							<th
+								data-options="align:'center',resizable:false,field:'propNo',width:70">编号</th>
+							<th
+								data-options="halign:'center',resizable:false,field:'propTitle',width:450">标题</th>
+							<th
+								data-options="align:'center',resizable:false,field:'depuName',width:100">所属部门</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propType',width:50">类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDate',width:80">提交日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propLast',width:80">修改日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propState',width:80">提案状态</th>
+							<th
+								data-options="align:'center',resizable:false,field:'memberName',width:80">提出者</th>
+							<th data-options="resizable:false,field:'memberSup',width:500 ">附议人</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!--分管提案面板-->
+		<div id="manage_proposal_panel" class="right_content_panel">
+			<div class="root_bottom"></div>
+			<div class="right_content_panel_text">
+				<table class="easyui-datagrid manage_proposal_panel"
+					id="manage_proposal_table"
+					data-options="fitColumns:false,checkOnSelect : true,striped : true,singleSelect :true,collapsible : false,url : 'findProp.do?type=managePropInfo',method : 'get',pagination : true,loadMsg : '正在加载中，请稍等... ',emptyMsg : '<span>无记录</span>'">
+					<thead>
+						<tr>
+							<th
+								data-options="align:'center',resizable:false,field:'propNo',width:70">编号</th>
+							<th
+								data-options="halign:'center',resizable:false,field:'propTitle',width:350">标题</th>
+							<th
+								data-options="align:'center',resizable:false,field:'depuName',width:100">所属部门</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propType',width:50">类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDealType',width:100">处理类型</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propDate',width:80">提交日期</th>
+							<th
+								data-options="align:'center',resizable:false,field:'propState',width:80">提案状态</th>
+							<th
+								data-options="align:'center',resizable:false,field:'memberName',width:80">提出者</th>
+							<th
+								data-options="align:'center',resizable:false,field:'primaryDeptName',width:80">承办部门</th>
+							<th
+								data-options="resizable:false,field:'heleDeptName',width:500 ">协办部门</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+
+		<!-- -------------------------------------------------提案具体信息 存放区 start-------------------------------------------------- -->
+		<!--查看提案具体信息面板 -->
+		<div class="right_content_panel" id="view_proposal_content_panel">
+			<div class="easyui-tabs"
+				style="width:100%;height:100%;position:relative;">
+				<div title="提案信息" style="padding:10px">
+					<div id="view_prop_content_panel"
+						style="overflow-y:scroll;position:absolute;top:30px;left:2%;height:calc(100% - 30px);width:98%;">
+					</div>
+				</div>
+				<div title="处理结果" style="padding:10px;position:relative;">
+					<label class=" view_proposal_btn primary_prop">处理类型:</label> <label
+						id="view_prop_passType" class=" view_proposal_btn primary_prop"></label>
+
+					<label class="view_proposal_btn primary_prop"></label> <label
+						class="view_proposal_btn primary_prop"></label> <label
+						class="view_proposal_btn primary_prop">承办单位:</label> <label
+						id="view_prop_primary" class=" view_proposal_btn primary_prop"></label>
+
+					<label class="view_proposal_btn primary_prop"></label> <label
+						class="view_proposal_btn primary_prop"></label> <label
+						class="view_proposal_btn primary_prop">协办单位:</label> <label
+						id="view_prop_help" class=" view_proposal_btn primary_prop"></label>
+
+					<label class="view_proposal_btn primary_prop"></label> <label
+						class="view_proposal_btn primary_prop"></label> <label
+						class="view_proposal_btn primary_prop">满意度:</label> <label
+						id="view_prop_satisfy" class=" view_proposal_btn primary_prop"></label>
+					<hr>
+					<div class="create_edit_panel">
+						<div style="padding: 15px" id="view_prop_result_panel"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--承办提案具体信息面板 -->
+		<div class="right_content_panel" id="primary_prop_content_panel">
+			<div class="easyui-tabs"
+				style="width:100%;height:100%;position:relative;">
+				<div title="提案信息" style="padding:10px">
+					<div id="primary_content_panel"
+						style="overflow-y:scroll;position:absolute;top:30px;left:2%;height:calc(100% - 30px);width:98%;">
+					</div>
+				</div>
+				<div title="处理提案" style="padding:10px;position:relative;">
+					<a href="javascript:void(0)" id="add_primary_prop"
+						style="width:150px"
+						class="easyui-linkbutton view_proposal_btn primary_prop"
+						data-options="plain:false,iconCls:'icon-add'">提交处理结果</a> <a
+						href="javascript:void(0)" id="cancel_primary_prop"
+						class="easyui-linkbutton view_proposal_btn primary_prop"
+						data-options="plain:false,iconCls:'icon-back'">取消</a><a
+						href="javascript:void(0)" id="view_idea_primary_prop"
+						class="easyui-linkbutton view_proposal_btn view_idea_primary_prop primary_prop"
+						data-options="plain:false,iconCls:'icon-back'">查看意见</a> <label
+						class="view_proposal_btn"> </label> <label
+						class="view_proposal_btn">当前状态:</label> <label
+						id="state_primary_prop" class="view_proposal_btn"></label>
+					<hr>
+					<div class="create_edit_panel" style="top:65px">
+						<div id="primary_proposal_edit"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--部署提案具体信息面板 -->
+		<div class="right_content_panel" id="deal_prop_content_panel">
+			<div class="root_bottom">
+				<a href="javascript:void(0)" id="add_deal_prop"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-add'">分配部门</a> <a
+					href="javascript:void(0)" id="cancel_deal_prop"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-add'">取消</a>
+			</div>
+			<div class="right_content_panel_text">
+				<div id="deal_content_div"
+					style="overflow-y:scroll;position:absolute;top:2%;left:2%;height:98%;width:98%;">
+				</div>
+			</div>
+		</div>
+
+		<!--我的提案具体信息面板-->
+		<div class="right_content_panel" id="mine_prop_content_panel">
+			<div class="easyui-tabs"
+				style="width:100%;height:100%;position:relative;">
+				<div title="提案信息" style="padding:10px">
+					<div id="prop_content_div"
+						style="overflow-y:scroll;position:absolute;top:30px;left:2%;height:calc(100% - 30px);width:98%;">
+					</div>
+				</div>
+				<div title="处理结果" style="padding:10px;position:relative;">
+					<a href="javascript:void(0)" id="feedback_proposal_btn_satisfy"
+						class="easyui-linkbutton view_proposal_btn feedback_proposal_btn"
+						data-options="plain:false,iconCls:'icon-add'">满意</a> <a
+						href="javascript:void(0)" id="feedback_proposal_btn_unSatisfy"
+						class="easyui-linkbutton view_proposal_btn feedback_proposal_btn"
+						data-options="plain:false,iconCls:'icon-back'">不满意</a><a
+						href="javascript:void(0)" id="feedback_proposal_btn_feedback"
+						class="easyui-linkbutton view_proposal_btn feedback_proposal_btn"
+						data-options="plain:false,iconCls:'icon-back'">提出意见</a><a
+						href="javascript:void(0)"
+						class="easyui-linkbutton view_proposal_btn feedback_proposal_btn view_idea_primary_prop"
+						data-options="plain:false,iconCls:'icon-back'">查看意见</a>
+
+					<hr>
+					<div class="result_context_panel" id="dept_result_context_panel">
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--附议提案具体信息面板-->
+		<div class="right_content_panel" id="support_prop_content_panel">
+			<!--顶部菜单区-->
+			<div class="root_bottom">
+				<a href="javascript:void(0)" id="support_proposal_submit_btn"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-edit'">附议该提案</a> <label
+					class="view_proposal_label">类型:</label> <label
+					class="view_proposal_label" id="support_proposal_type"></label> <label
+					class="view_proposal_label"></label> <label
+					class="view_proposal_label"></label> <label
+					class="view_proposal_label">提出人:</label> <label
+					class="view_proposal_label" id="support_proposal_owner"></label> <label
+					class="view_proposal_label"></label> <label
+					class="view_proposal_label"></label> <label
+					class="view_proposal_label">现有附议人:</label> <label
+					class="view_proposal_label" id="support_proposal_sup"></label>
+			</div>
+			<!--下方正文区-->
+			<div class="right_content_panel_text">
+				<div id="support_content_panel"
+					style="overflow-y:scroll;position:absolute;top:2%;left:2%;height:98%;width:98%;">
+				</div>
+			</div>
+		</div>
+
+		<!--查看新闻具体信息面板-->
+		<div class="right_content_panel" id="news_content_panel">
+			<!--顶部菜单区-->
+			<div class="root_bottom"></div>
+			<!--下方正文区-->
+			<div class="right_content_panel_text">
+				<div id="news_content_edit"
+					style="overflow-y:scroll;position:absolute;top:2%;left:2%;height:98%;width:98%;">
+				</div>
+			</div>
+		</div>
+
+		<!--审核提案具体信息面板-->
+		<div class="right_content_panel" id="check_prop_content_panel">
+			<!--顶部菜单区-->
+			<div class="root_bottom">
+				<a href="javascript:void(0)" id="check_proposal_pass_btn"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-edit'">通过该提案</a> <a
+					href="javascript:void(0)" id="check_proposal_notPass_btn"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-edit'">驳回该提案</a>
+			</div>
+			<!--下方正文区-->
+			<div class="right_content_panel_text">
+				<div id="check_content_panel"
+					style="overflow-y:scroll;position:absolute;top:2%;left:2%;height:98%;width:98%;">
+				</div>
+			</div>
+		</div>
+
+		<!--分类提案具体信息面板-->
+		<div class="right_content_panel" id="register_prop_content_panel">
+			<!--顶部菜单区-->
+			<div class="root_bottom">
+				<a href="javascript:void(0)" id="register_proposal_pass_btn"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-edit'">设定类别</a>
+					<a href="javascript:void(0)" id="register_proposal_pass_cancel"
+					class="easyui-linkbutton view_proposal_btn"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+			<!--下方正文区-->
+			<div class="right_content_panel_text">
+				<div id="register_content_panel"
+					style="overflow-y:scroll;position:absolute;top:2%;left:2%;height:98%;width:98%;">
+				</div>
+			</div>
+		</div>
+
+		<!-- -------------------------------------------------提案具体信息 存放区 end -------------------------------------------------- -->
+	</div>
+
+	<!--弹出框存放区-->
+	<!-- 查看意见 -->
+	<div id="view_idea_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="查看意见"
+		data-options="iconCls:'icon-add'"
+		style="width:800px;height:600px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<div id="view_idea_content"
+				style="overflow-y:scroll;padding:15px;width:100%;height:calc(100% - 40px);"></div>
+
+			<div class="new_account_window_toolbar">
+				<a id="view_idea_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- 提出修改意见 -->
+	<div id="add_idea_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="提出意见"
+		data-options="iconCls:'icon-add'"
+		style="width:800px;height:600px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<div id="add_idea_edit"></div>
+
+			<div class="new_account_window_toolbar">
+				<a id="add_idea_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="add_idea_window_cancel"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- 提案设定类别弹出框 -->
+	<div id="register_dept_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="设定提案类别"
+		data-options="iconCls:'icon-add'"
+		style="width:400px;height:200px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>设定类别:</td>
+					<td><input class="easyui-combobox" type="text"
+						id="register_type"
+						data-options="url:'json/register_type.json',valueField:'id',textField:'text',required:true"></input></td>
+				</tr>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="register_dept_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="register_dept_window_cancel"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+
+	<!--分管分配部门弹出框 -->
+	<div id="manage_dept_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="分管部门"
+		data-options="iconCls:'icon-add'"
+		style="width:400px;height:250px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>姓名:</td>
+					<td><input type="text" class="easyui-textbox"
+						id="manage_dept_memName" readonly="readonly"></input></td>
+				</tr>
+				<tr>
+					<td>工号:</td>
+					<td><input type="text" class="easyui-textbox"
+						id="manage_dept_memId" readonly="readonly"></input></td>
+				</tr>
+				<tr>
+					<td>选择分管部门:</td>
+					<td><input class="easyui-combobox" type="text"
+						id="manage_dept_name"
+						data-options="url:'TreeNode.do?treeType=deptNode',valueField:'id',textField:'text',multiline:true,panelHeight:'auto',multiple:true,required:true"></input></td>
+				</tr>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="manage_dept_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="manage_dept_window_cancel"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- 部署分配部门弹出框 -->
+	<div id="deal_dept_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="分配部门"
+		data-options="iconCls:'icon-add'"
+		style="width:400px;height:400px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>选择承办部门:</td>
+					<td><input class="easyui-combobox" type="text"
+						id="deal_dept_name"
+						data-options="url:'TreeNode.do?treeType=deptNode',valueField:'id',textField:'text',required:true"></input></td>
+				</tr>
+				<tr>
+					<td>选择协办部门:</td>
+					<td><input class="easyui-combobox" type="text"
+						id="deal_help_dept_name"
+						data-options="url:'TreeNode.do?treeType=deptNode',valueField:'id',textField:'text',multiline:true,panelHeight:'auto',multiple:true"></input></td>
+				</tr>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="deal_dept_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="deal_dept_window_cancel"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- 修改部门弹出框 -->
+	<div id="modify_dept_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="修改部门"
+		data-options="iconCls:'icon-add'"
+		style="width:400px;height:200px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>部门名:</td>
+					<td><input class="easyui-textbox" type="text"
+						id="modify_dept_name" data-options="required:true"></input></td>
+				</tr>
+				<tr>
+					<td>部门联络员:</td>
+					<td><input class="easyui-combotree" id="modify_dept_manage"
+						data-options="method:'get',required:false" style="width:200px;"></td>
+				</tr>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="modify_dept_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="modify_dept_window_cancel"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 查看会议弹出框 -->
+	<div id="view_meeting_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="查看会议"
+		data-options="iconCls:'icon-add'"
+		style="width:400px;height:200px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>选择查询的会议:</td>
+					<td><input class="easyui-combobox" type="text"
+						id="view_meeting_id"
+						data-options="url:'TreeNode.do?treeType=meeting',valueField:'id',textField:'text',required:true"></td>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="view_meeting_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="view_meeting_cancel" class="easyui-linkbutton root_bottom_btn"
+					style="width:70px" data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- 确定会议弹出框 -->
+	<div id="add_meeting_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="添加到会议"
+		data-options="iconCls:'icon-add'"
+		style="width:400px;height:200px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>选择会议:</td>
+					<td><input class="easyui-combobox" type="text"
+						id="select_meeting_id"
+						data-options="url:'TreeNode.do?treeType=meeting',valueField:'id',textField:'text',required:true"></td>
+				</tr>
+				<tr>
+					<td><a id="add_meeting_btn" class="easyui-linkbutton"
+					data-options="plain:false,iconCls:'icon-add'">添加一个会议</a></td>
+					<td><input class="easyui-textbox" type="text"
+						id="add_meeting_input"></input></td>
+				</tr>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="add_meeting_submit" class="easyui-linkbutton root_bottom_btn"
+					style="width:70px" data-options="plain:false,iconCls:'icon-ok'">确认</a>
+				<a id="add_meeting_cancel" class="easyui-linkbutton root_bottom_btn"
+					style="width:70px" data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+	<!--新建代表团弹出框-->
+	<div id="new_depu_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="新建代表团"
+		data-options="iconCls:'icon-add'"
+		style="width:350px;height:150px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>代表团名:</td>
+					<td><input class="easyui-textbox" type="text"
+						id="add_depu_name" data-options="required:true"></input></td>
+				</tr>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="new_depu_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="new_depu_window_cancel"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 修改代表团弹出框 -->
+	<div id="modify_depu_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="新建代表团"
+		data-options="iconCls:'icon-add'"
+		style="width:400px;height:200px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>代表团名:</td>
+					<td><input class="easyui-textbox" type="text"
+						id="modify_depu_name" data-options="required:true"></input></td>
+				</tr>
+				<tr>
+					<td>团长:</td>
+					<td><input class="easyui-combotree" id="modify_depu_manage"
+						data-options="method:'get',required:false" style="width:200px;"></td>
+				</tr>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="modify_depu_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="modify_depu_window_cancel"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+	<!--新建部门账号弹出框-->
+	<div id="new_dept_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="新建部门"
+		data-options="iconCls:'icon-add'"
+		style="width:350px;height:150px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>部门名:</td>
+					<td><input class="easyui-textbox" type="text"
+						id="add_dept_name" data-options="required:true"></input></td>
+				</tr>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="new_dept_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="new_dept_window_cancel"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+	<!--新建员工账号弹出框-->
+	<div id="new_account_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="新建账号"
+		data-options="iconCls:'icon-add'"
+		style="width:500px;height:500px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>姓名:</td>
+					<td><input class="easyui-textbox" type="text"
+						placeholder="输入成员姓名" id="add_mem_name"
+						data-options="required:true"></input></td>
+				</tr>
+				<tr>
+					<td>工号:</td>
+					<td><input class="easyui-textbox" type="text" id="add_mem_no"
+						data-options="required:true,validType:'sameNo'"></input></td>
+				</tr>
+				<!--<tr>
+					<td>手机号:</td>
+					<td><input class="easyui-textbox" type="text"
+						id="add_mem_phone" data-options="required:true"></input></td>
+				</tr>-->
+				<tr>
+					<td>初始密码:</td>
+					<td><input class="easyui-textbox" type="password"
+						id="add_mem_pass" data-options="multiline:false,required:true"></input></td>
+				</tr>
+				<tr>
+					<td>确认初始密码:</td>
+					<td><input class="easyui-textbox" type="password"
+						id="add_mem_rePass"
+						data-options="multiline:false,required:true,validType:'rePassWord'"></input></td>
+				</tr>
+				<tr>
+					<td>所属部门:</td>
+					<td><input class="easyui-combotree" id="add_mem_dept"
+						data-options="url:'TreeNode.do?treeType=dept',method:'get',required:true"
+						style="width:200px;"></td>
+				</tr>
+				<tr>
+					<td>所属代表团:</td>
+					<td><input class="easyui-combotree" id="add_mem_depu"
+						data-options="url:'TreeNode.do?treeType=depu',method:'get',required:false"
+						style="width:200px;"></td>
+				</tr>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="new_account_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="new_account_window_cancel"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+	<!--修改员工账号弹出框-->
+	<div id="modify_account_window" collapsible="false" minimizable="false"
+		closed="true" class="easyui-window" title="修改信息"
+		data-options="iconCls:'icon-add'"
+		style="width:500px;height:400px;padding:5px;">
+		<div class="easyui-layout" data-options="fit:true">
+			<table cellpadding="5" class="new_account_table">
+				<tr>
+					<td>姓名:</td>
+					<td><input class="easyui-textbox" type="text"
+						id="modify_mem_name" data-options="required:true"></input></td>
+				</tr>
+				<tr>
+					<td>工号:</td>
+					<td><input readonly="readonly" class="easyui-textbox"
+						type="text" id="modify_mem_no" data-options="required:true"></input></td>
+				</tr>
+				<!--<tr>
+					<td>手机号:</td>
+					<td><input class="easyui-textbox" type="text"
+						id="add_mem_phone" data-options="required:true"></input></td>
+				</tr>-->
+				<tr>
+					<td></td>
+					<td><a id="modify_pass_btn"
+						class="easyui-linkbutton root_bottom_btn" style="width:120px"
+						isPass="false" data-options="plain:false,iconCls:'icon-ok'">修改密码</a></td>
+				</tr>
+				<tr class="modify_mem_pass_tr">
+					<td>修改密码:</td>
+					<td><input class="easyui-textbox" type="password"
+						id="modify_mem_pass" data-options="multiline:false,required:true"></input></td>
+				</tr>
+				<tr class="modify_mem_pass_tr">
+					<td>确认修改密码:</td>
+					<td><input class="easyui-textbox" type="password"
+						id="modify_mem_rePass"
+						data-options="multiline:false,required:true,validType:'mPassWord'"></input></td>
+				</tr>
+				<tr>
+					<td>所属部门:</td>
+					<td><input class="easyui-combotree" id="modify_mem_dept"
+						data-options="url:'TreeNode.do?treeType=dept',method:'get',required:true"
+						style="width:200px;"></td>
+				</tr>
+				<tr>
+					<td>所属代表团:</td>
+					<td><input class="easyui-combotree" id="modify_mem_depu"
+						data-options="url:'TreeNode.do?treeType=depu',method:'get',required:false"
+						style="width:200px;"></td>
+				</tr>
+
+				<tr style="display:none">
+					<td>级别:</td>
+					<td><input class="easyui-combotree" id="modify_mem_class"
+						data-options="url:'json/MemberClass.json',method:'get',required:false"
+						style="width:200px;"></td>
+				</tr>
+			</table>
+			<div class="new_account_window_toolbar">
+				<a id="modify_account_window_submit"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-ok'">确认</a> <a
+					id="modify_account_window_cancel"
+					class="easyui-linkbutton root_bottom_btn" style="width:70px"
+					data-options="plain:false,iconCls:'icon-back'">取消</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- 部门树点击菜单 -->
+	<div id="deptMenuProp" class="easyui-menu" style="width:120px;">
+		<div data-options="iconCls:'icon-add'"
+			class="account_manage_btn_dept_add">添加</div>
+		<div data-options="iconCls:'icon-edit'"
+			class="account_manage_btn_dept_edit">修改</div>
+		<div class="account_manage_btn_dept_dele">删除</div>
+	</div>
+	<!-- 部门树点击菜单 end-->
+
+	<!-- 代表团树点击菜单 -->
+	<div id="depuMenuProp" class="easyui-menu" style="width:120px;">
+		<div data-options="iconCls:'icon-add'"
+			class="account_manage_btn_depu_add">添加</div>
+		<div data-options="iconCls:'icon-edit'"
+			class="account_manage_btn_depu_edit">修改</div>
+		<div class="account_manage_btn_depu_dele">删除</div>
+	</div>
+	<!-- 代表团树点击菜单end -->
+
+	<script src="js/lib.js" type="text/javascript"></script>
+	<script src="js/createProposal.js" type="text/javascript"></script>
+	<script src="js/supportProposal.js" type="text/javascript"></script>
+	<script src="js/checkProposal.js" type="text/javascript"></script>
+	<script src="js/dealProposal.js" type="text/javascript"></script>
+	<script src="js/addMember.js" type="text/javascript"></script>
+	<script src="js/viewProposal.js" type="text/javascript"></script>
+	<script src="js/registerProposal.js" type="text/javascript"></script>
+	<script src="js/init.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+[{
+	"id":"normal_proposal",
+	"text":"提案",
+	"selected":true
+},{
+	"id":"meeting_proposal",
+	"text":"会议"
+}]

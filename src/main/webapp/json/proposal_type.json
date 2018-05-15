@@ -1,0 +1,11 @@
+[{
+	"id":"allType_proposal",
+	"text":"查看全部",
+	"selected":true
+},{
+	"id":"normal_proposal",
+	"text":"提案"
+},{
+	"id":"meeting_proposal",
+	"text":"会议"
+}]

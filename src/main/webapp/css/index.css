@@ -1,0 +1,218 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+body {
+    /* body 灞炴�� */
+    background-position: top left;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    /* 鑳屾櫙鍥剧墖璁剧疆 */
+    background-attachment: fixed;
+    background-image: url('../img/login_background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+/*濯掍綋鍝嶅簲寮忓竷灞�*/
+/*  宸茬煡璁惧锛�
+    iphone 6:   width: 375px;   height: 559px;
+    Galaxy S7:  width: 430px;   height: 669px;
+    XiaoMi 5:   width: 360px;   height:514px;
+    Honor 9:    width锛�360px;   height:616px;
+*/
+@media only screen and (max-width:430px){
+    /*鍝嶅簲闈㈡澘灏忎簬灞忓箷澶у皬*/
+    html {
+        width: 100%;
+        height: 100%;
+    }
+    body{
+        height: 100%;
+        width: 100%;
+        
+    }
+}
+.layout {
+    /* 涓荤晫闈㈠睘鎬� */
+    height: 100%;
+    width:100%;
+    display: flex;
+    align-items: center;
+    /* expariment feature */
+}
+.content {
+    /* 鍐呭闈㈡澘灞炴�� */
+    margin: 0 auto;
+}
+.panel {
+    /* 闈㈡澘灞炴�� */
+    width: 430px;
+    padding: 30px;
+    background-color: rgba(255,255,255,0.85);
+}
+.brand{
+    /*鏍囧織灞炴��*/
+    width:100%;
+    height:40px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+.brand_icon__ico{
+    color:#0067b8;
+}
+.brand_icon__font{
+    font-size:26px;
+    margin-left:5px;
+}
+.login_title{
+    text-align:left;
+    margin-bottom:0;
+    font-size:22px;
+}
+#form1 > ul {
+    margin: 0;
+    list-style-type:none;
+    padding:0;
+}
+#form1 li {
+    margin: 0;
+    height:70px;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: #8aadbe;
+}
+.login_input {
+    padding-top: 24px;
+    padding-bottom: 10px;
+    display: flex;
+    position: relative;
+}
+.login_input > input {
+    /*杈撳叆妗嗗睘鎬�*/
+    background-color: rgba(255,255,255,0);
+    border: none;
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+    font-size:20px;
+    z-index:1;
+}
+.login__symble_1 {
+    color: rgba(10, 92, 159, 0.50);
+}
+.login_in__symble_2 {
+    color: rgba(10, 92, 159, 0.70);
+    z-index: 1;
+}
+.login_in__symble_2:hover{
+    cursor:pointer;
+    color: rgb(10, 72, 124);
+}
+.login_button {
+    width: 370px;
+    height: 50px;
+    display: flex;
+    margin: 40px auto 10px auto;
+}
+.login_button > .btn {
+    width: 100%;
+    height: 100%;
+    background-color: #1f4f82;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.18);
+}
+.login_button>.btn:hover {
+    background-color: #2f77c5;
+    cursor:pointer;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #fff;
+}
+
+.signup {
+    /* 娉ㄥ唽鐣岄潰灞炴�� */
+    margin-top: 10px;
+}
+.signup_title{
+    text-align:left;
+    margin-bottom:15px;
+    font-size:20px;    
+}
+.login_input > label {
+    /* 杈撳叆鎻愮ず */
+    position: absolute;
+    width: 370px;
+    text-align: center;
+    font-size: 20px;
+    z-index: 0;
+    margin: 0;
+}
+.signup_button {
+    width: 370px;
+    height: 50px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.signup_button > .btn {
+    /* 娉ㄥ唽鎸夐挳灞炴�� */
+    width: 100%;
+    height:100%;
+    border-radius:0;
+    font-size:20px;
+    font-weight:600;
+    background-color:#fff;
+    color:#1f4f82;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.18);
+}
+.signup_button > .btn:hover {
+    color:#fff;
+    background-color:#2f77c5;
+    cursor:pointer;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #fff;
+}
+.copyright {
+    /* 鐗堟潈淇℃伅灞炴�� */
+    text-align: center;
+    font-size: 14px;
+    margin-top:20px;
+}
+.copyright>ul{
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+.copyright li{
+    list-style: none;
+    display:inline-block;
+}
+#copyright__link{
+    display:inline-block;
+}
+#copyright__link:hover{
+    cursor: pointer;
+    text-decoration:underline;
+    color: #1f4f82;
+    font-weight: bold;
+}
+.nf4-copyright__brand__font{
+    font-size: 1.6em;
+    margin-left:10px;
+}
+.nf4-copyright__body{
+    display:flex;
+    justify-content: center;
+    margin-bottom:15px;
+}
+#nf4-copyright__text{
+    text-align: center;
+}
